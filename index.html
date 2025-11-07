@@ -1,139 +1,63 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RobotAli</title>
-<style>
-body {
-  margin:0;
-  font-family: Aviny, sans-serif;
-  background:#0f172a;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-#container{
-  width:95%;
-  max-width:600px;
-  background:#1e293b;
-  border-radius:15px;
-  padding:15px;
-  display:flex;
-  flex-direction:column;
-  height:85vh;
-}
-#chat{
-  flex:1;
-  overflow-y:auto;
-  padding:10px;
-  border-radius:8px;
-  background:#334155;
-  margin-bottom:10px;
-}
-.msg{
-  margin:8px 0;
-  padding:10px;
-  border-radius:7px;
-  max-width:80%;
-}
-.user{background:#2563eb; align-self:flex-end;}
-.bot{background:#475569; align-self:flex-start;}
-#inputBar{display:flex; gap:5px;}
-input{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:7px;
-  outline:none;
-}
-button{
-  padding:10px 14px;
-  border:none;
-  border-radius:7px;
-  background:#22c55e;
-  color:white;
-  cursor:pointer;
-}
-#apiBox{
-  margin-bottom:8px;
-  display:flex;
-  gap:5px;
-}
-#apiKey{
-  flex:1;
-  padding:6px;
-  border:none;
-  border-radius:6px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max Money</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
 </head>
 <body>
+  <header>
+    <h1 class="neon-title">Amir Max Money</h1>
+    <button id="toggleTheme">🌙 / ☀️</button>
+  </header>
 
-<div id="container">
-  <div id="apiBox">
-    <input id="apiKey" type="password" placeholder="API Key گوگل، DeepSeek یا Grok رو اینجا تایپ کن">
-    <button onclick="saveKey()">ذخیره</button>
-  </div>
+  <main>
+    <section class="downloads">
+      <h2>خدمات</h2>
+      <div class="card">
+        <h3>وبلاگ</h3>
+        <p>اینجا به صورت رایگان چیز یاد بگیر!</p> 
+        <a href="index5.html" class="download-btn">دیدن</a>
+      </div>
+		  <div class="card">
+        <h3>ویدیو ها</h3>
+        <p>تمام ویدیو های من اینجاست</p> 
+        <a href="www.aparat.com/artanimate" class="download-btn">دیدن</a>
+      </div>
+		 <div class="card">
+        <h3>آرت انیمیت</h3>
+        <p>سایت جامع من</p> 
+        <a href="index4.html" class="download-btn">دیدن</a>
+      </div>
+		</div>
+	  	 <div class="card">
+		<div class="badges">
+        <h3>ارتباط با من</h3>
+        <p>اگه مشکلی یا حرفی داری در خدمتم!</p> 
+        <a href="index8.html" class="download-btn">دیدن</a>
+      </div>
+		</div>
+		 <div class="card">
+		<div class="badges">
+        <h3>درباره من</h3>
+        <p>تمام رزومه‌م اینجاست</p> 
+        <a href="index3.html" class="download-btn">دیدن</a>
+      </div>
+		</div>
+		 <div class="card">
+        <h3>اپلیکیشن ها</h3>
+        <p>دسترسی به تمامی اپ های من</p> 
+        <a href="index2.html" class="download-btn">دیدن</a>
+      </div>
+  </main>
 
-  <div id="chat"></div>
+  <footer>
+    <p>مکس مانی | تمامی حقوق محفوظ است © 2025</p>
+  </footer>
 
-  <div id="inputBar">
-    <input id="msg" placeholder="بزن ببین چی میگی 😎">
-    <button onclick="sendMsg()">ارسال</button>
-  </div>
-</div>
-
-<script>
-let API_KEY = "";
-
-function saveKey(){
-  API_KEY = document.getElementById('apiKey').value;
-  alert("کلید ذخیره شد ✅ حالا چت کن بریم!");
-}
-
-function addMsg(text, sender){
-  const chat = document.getElementById('chat');
-  const div = document.createElement('div');
-  div.className = `msg ${sender}`;
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-async function sendMsg(){
-  const input = document.getElementById('msg');
-  const text = input.value.trim();
-  if(!text) return;
-  addMsg(text, "user");
-  input.value = "";
-
-  if(!API_KEY){
-    addMsg("داداش اول API رو بذار بالا ☝️", "bot");
-    return;
-  }
-
-  addMsg("صبر کن ببینم چی میشه 😎...", "bot");
-
-  try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=" + API_KEY, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        contents: [{role:"user", parts:[{text}]}]
-      })
-    });
-    const data = await res.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    addMsg(reply || "چی بگم والله جواب نگرفتم 🤷‍♂️", "bot");
-
-  } catch(e){
-    addMsg("خطا داد! فک کنم اینترنت یا API مشکل داره 😬", "bot");
-  }
-}
-</script>
+  <script src="js/script.js"></script>
 
 </body>
 </html>

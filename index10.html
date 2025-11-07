@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+	<link rel="shortcut icon" href="favicon.png" />
+    <style>
+        body {
+            font-family: Mj_parand, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #E0FCFF;
+        }
+		h3 {
+            font-family: Mj_parand, sans-serif;
+            text-align: center;
+            padding: 10px;
+		}
+        .container {
+            background-color: #FFEEB5;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .input-field {
+            width: 90%;
+
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .button {
+			font-family: Mj_parand;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>ورود به حساب</h2>
+        <input type="text" id="phone" class="input-field" placeholder="شماره تلفن">
+        <input type="password" id="password" class="input-field" placeholder="رمز عبور">
+		<h3>✅حفظ حساب کاربری</h3>
+        <button class="button" onclick="login()">ورود</button>
+    </div>
+
+
+<script>
+    function login() {
+        const phone = document.getElementById("phone").value;
+        const password = document.getElementById("password").value;
+
+        // لیست کاربران مجاز
+        const users = {
+            "09965655671": { password: "a13901390", name: "امیرعلی کرمی", image: "https://s8.uupload.ir/files/a_karami_liwl.png" },
+            "09123456789": { password: "az123456", name: "کاربر مهمان", image: "https://s6.uupload.ir/files/file_(1)_s05t.jpg" }
+        };
+
+        if (users[phone] && users[phone].password === password) {
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("userName", users[phone].name);
+            localStorage.setItem("userImage", users[phone].image);
+            alert("ورود موفقیت‌آمیز بود");
+
+            window.location.href = "index9.html";  // انتقال به صفحه اصلی
+        } else {
+            alert("شماره تلفن یا رمز عبور اشتباه است!");
+        }
+    }
+
+    // افزودن رویداد برای فشردن دکمه Enter
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("password").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                login();
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

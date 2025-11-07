@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.png" />
+  <title>Quize of Scinence</title>
+  <style>
+	  
+    body {
+      font-family: Mj_parand, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: url('https://s6.uupload.ir/files/bg1010047www.tiktarh.com__s3c.jpg') no-repeat center center / cover;
+    }
+	  h29{
+		  font-family: Mj_parand, sans-serif;
+	  }
+    h7 {
+      font-family: Mj_parand, sans-serif;
+	  color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    h10 {
+      font-family: Mj_parand, sans-serif;
+      text-align: center;
+      padding: 1px;
+    }
+    h1 {
+      font-family: Tahoma, sans-serif;
+      color: #333;
+    }
+	      /* استایل منوی سه خطی */
+    .menu-icon {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 4px;
+      width: 100%;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    /* استایل منوی کشویی */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #FDFFBF;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+      transition: left 0.3s ease;
+      z-index: 999;
+
+    }
+
+    .menu.open {
+      left: 0;
+    }
+
+    .menu ul {
+      list-style: none;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .menu ul li {
+      margin: 10px 0;
+    }
+
+    .menu ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .menu ul li a:hover {
+      color: #4CAF50;
+
+    }
+
+    /* استایل تار کردن صفحه هنگام باز شدن منو */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 998;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .quiz-container {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #FFF9D3;
+      width: 60%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h9 {
+      font-family: Tahoma, sans-serif;
+	  color:white
+    }
+    h8 {
+      color: #333;
+    }
+    .quiz-container {
+      margin: 5px auto;
+      padding: 5px;
+      background-color: #FFEEB5;
+      width: 60%;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h7 {
+      color: #333;
+    }
+    .quiz-container {
+      margin: 2px auto;
+      padding: 2px;
+      background-color: #FFF9D3;
+      width: 60%;
+      border-radius: 2px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+	.field{
+	  font-family: homa, sans-serif;
+      font-size: 20px;
+      margin-bottom: 15px;
+      text-align: center;
+	  }
+    .question {
+      font-family: homa, sans-serif;
+      font-size: 25px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .answers {
+      list-style-type: none;
+      padding: 0;
+    }
+    .answer {
+      background-color: #FFED83;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .answer:hover {
+      background-color: #FFE860;
+    }
+    .button {
+      font-family: Mj_parand, sans-serif;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .user-info {
+      text-align: left;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  	  <div id="userInfo" class="user-info" style="display:none;">
+    <img src="https://s8.uupload.ir/files/a_karami_liwl.png" alt="عکس پروفایل" width="80" height="80">
+    <p><strong>نام:</strong> امیرعلی کرمی</p>
+  </div>
+	
+	<div id="userInfo2" class="user-info" style="display:none;">
+    <img src="https://s6.uupload.ir/files/file_(1)_s05t.jpg" alt="عکس پروفایل" width="80" height="80">
+    <p><strong>نام:</strong> کاربر مهمان</p>
+  </div>
+	
+<div id="userProfile" style="display:none; text-align:left; margin-top:10px;">
+    <img id="userImage" src="" alt="عکس پروفایل" width="80" height="80">
+    <p id="userName"></p>
+</div>
+
+	<h1>👑Quiz of Science👑</h1>
+  <h7>😉اینجا جای توئه دانشمند</h7><h8>🤓اینجا هر روز زوج کوییز داریم با جایزه</h8>
+  <h1>فصل چهارم</h1><h10>کوییز اول</h10>
+
+	<div id='login-message' style="text-algin: center;font-size: 25px;margin-top: 20px;">لطفا به حساب خود وارد شوید</div>
+  <div class="quiz-container">
+	  <div id="quiz" style="display:none;">
+	  <div class="question" id="question-text">پروتون ذره تشکیل دهنده ... است</div>
+      <ul class="answers">
+        <li class="answer" onclick="checkAnswer('a')">بار اتم</li>
+        <li class="answer" onclick="checkAnswer('b')">رنگ اتم</li>
+        <li class="answer" onclick="checkAnswer('c')">شکل اتمی</li>
+        <li class="answer" onclick="checkAnswer('d')">گزینه 1 و 2</li>
+      </ul>
+    </div>
+	  </div>
+
+    <div id="result"></div>
+  </div>
+	  <!-- آیکون منوی سه خطی -->
+  <div class="menu-icon" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- منوی کشویی -->
+  <div class="menu" id="menu">
+    <ul>
+      <li><a href="#" onclick="about()">درباره ما</a></li>
+      <li><a href="#" onclick="cantact()">ارتباط با ما</a></li>
+	  <li><a href="https://survey.porsline.ir/s/TLKcToQD">عضویت</a></li>
+	  <li><a href="https://survey.porsline.ir/s/5pZIXicv">پریمیوم</a></li>
+	  <li><a href="#" onclick="foregt()">فراموشی رمزعبور</a></li>
+      <li><a href="#" onclick="logout()">خروج از حساب کاربری</a></li>
+	  <li><a href="index7.html">سایت فعال مدیا</a></li>
+	  <li><a href="index4.html">سایت آرت انیمیت</a></li>
+      <li><a href="index2.html">اطلاعیه‌ها</a></li>
+    </ul>
+  </div>
+
+  <!-- لایه تاریک هنگام باز شدن منو -->
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+	<audio id="correct-sound" src=data/correct.mp3></audio>
+	<audio id="wrong-sound" src=data/wrong.mp3></audio>
+	<audio id="end" src="data/End.mp3"></audio>
+	<audio id="win" src="data/Win.mp3"></audio>
+	<div id='loginhelp' style="text-algin: center;font-size: 20px;margin-top: 20px;">در صورت نداشتن حساب کاربری یا فراموشی رمزعبور به بخش منو بروید</div>
+  <h29>
+	  <a id="loginMenuItem"><a href="index10.html">ورود به حساب</a></a>
+  </h29>
+
+  <script>
+    let currentQuestion = 0;
+    let score = parseInt(localStorage.getItem('score')) || 0;
+const questions = [
+  {
+    question: "دستگاه عصبی از چه بخش‌هایی تشکیل شده است؟",
+    correctAnswer: "a",
+    answers: {
+      a: "بخش مرکزی و بخش محیطی",
+      b: "مغز و نخاع",
+      c: "عصبی و حرکتی",
+      d: "مغز، نخاع، و اعصاب"
+    }
+  },
+  {
+    question: "مغز در کجا قرار دارد؟",
+    correctAnswer: "c",
+    answers: {
+      a: "در پشت سر",
+      b: "در قسمت پایین گردن",
+      c: "درون جمجمه",
+      d: "در شکم"
+    }
+  },
+  {
+    question: "وظیفه نخاع چیست؟",
+    correctAnswer: "b",
+    answers: {
+      a: "تنظیم ضربان قلب",
+      b: "انتقال پیام‌ها بین مغز و بدن",
+      c: "حفظ تعادل بدن",
+      d: "پاسخ به محرک‌های محیطی"
+    }
+  },
+  {
+    question: "چه نوع فعالیت‌هایی توسط دستگاه عصبی تنظیم می‌شوند؟",
+    correctAnswer: "d",
+    answers: {
+      a: "فقط فعالیت‌های ارادی",
+      b: "فقط فعالیت‌های غیر ارادی",
+      c: "فقط فعالیت‌های حرکتی",
+      d: "تمامی فعالیت‌های ارادی و غیر ارادی"
+    }
+  },
+  {
+    question: "فعالیت‌های غیر ارادی چه ویژگی‌هایی دارند؟",
+    correctAnswer: "a",
+    answers: {
+      a: "بدون اراده و بسیار سریع انجام می‌شوند",
+      b: "نیاز به تصمیم‌گیری دارند",
+      c: "همیشه تحت کنترل مغز هستند",
+      d: "به دلیل تمرین‌های ذهنی به وجود می‌آیند"
+    }
+  },
+  {
+    question: "کدام بخش از مغز به هماهنگی و حفظ تعادل بدن کمک می‌کند؟",
+    correctAnswer: "c",
+    answers: {
+      a: "مخ",
+      b: "نخاع",
+      c: "مخچه",
+      d: "ساقه مغز"
+    }
+  },
+  {
+    question: "ساقه مغز کدام وظایف را بر عهده دارد؟",
+    correctAnswer: "b",
+    answers: {
+      a: "کنترل فعالیت‌های ارادی",
+      b: "کنترل فعالیت‌های غیر ارادی مانند تنفس و ضربان قلب",
+      c: "هماهنگی حرکت‌های بدن",
+      d: "انتقال پیام‌ها به مغز"
+    }
+  },
+  {
+    question: "مغز چگونه اطلاعات را دریافت و پردازش می‌کند؟",
+    correctAnswer: "d",
+    answers: {
+      a: "از طریق پیام‌های صوتی",
+      b: "از طریق تکانه‌های الکتریکی",
+      c: "از طریق جریان خون",
+      d: "از طریق پیام‌های عصبی"
+    }
+  },
+  {
+    question: "چه نوع واکنش‌هایی به عنوان فعالیت‌های انعکاسی شناخته می‌شوند؟",
+    correctAnswer: "a",
+    answers: {
+      a: "واکنش‌هایی که سریع و بدون اراده رخ می‌دهند",
+      b: "واکنش‌هایی که به اراده فرد بستگی دارند",
+      c: "واکنش‌هایی که نیاز به تمرین دارند",
+      d: "واکنش‌هایی که در اثر آسیب‌های بدن ایجاد می‌شوند"
+    }
+  },
+  {
+    question: "کدام بخش از مغز مرکز تفکر و حل مسائل است؟",
+    correctAnswer: "b",
+    answers: {
+      a: "مخچه",
+      b: "مخ",
+      c: "ساقه مغز",
+      d: "نخاع"
+    }
+  },
+  {
+    question: "نورون چیست؟",
+    correctAnswer: "d",
+    answers: {
+      a: "یک نوع سلول عضلانی",
+      b: "یک نوع سلول خونی",
+      c: "یک نوع سلول پوستی",
+      d: "یاخته‌ای که پیام‌های عصبی را منتقل می‌کند"
+    }
+  },
+  {
+    question: "چه نوع عصبی پیام‌های حرکتی را از مغز به اندام‌ها می‌برد؟",
+    correctAnswer: "a",
+    answers: {
+      a: "عصب حرکتی",
+      b: "عصب حسی",
+      c: "عصب حسی-حرکتی",
+      d: "عصب جانبی"
+    }
+  },
+  {
+    question: "دندریت و آکسون در نورون چه کارهایی انجام می‌دهند؟",
+    correctAnswer: "c",
+    answers: {
+      a: "دندریت پیام را به جسم یاخته‌ای می‌آورد و آکسون آن را از جسم یاخته‌ای خارج می‌کند",
+      b: "آکسون پیام را به جسم یاخته‌ای می‌آورد و دندریت آن را از جسم یاخته‌ای خارج می‌کند",
+      c: "دندریت پیام را به جسم یاخته‌ای می‌آورد و آکسون آن را به نورون‌های دیگر می‌برد",
+      d: "هیچکدام"
+    }
+  },
+  {
+    question: "پیام عصبی چگونه در طول نورون جریان می‌یابد؟",
+    correctAnswer: "b",
+    answers: {
+      a: "از دندریت به آکسون",
+      b: "از جسم یاخته‌ای به دندریت و سپس به آکسون",
+      c: "از آکسون به جسم یاخته‌ای",
+      d: "از نورون به عصب حسی"
+    }
+  }
+];
+
+
+function checkAnswer(answer) {
+    const currentQ = questions[currentQuestion];
+    const correctsound = document.getElementById('correct-sound');
+    const wrongsound = document.getElementById('wrong-sound');
+    const resultDiv = document.getElementById('result');
+
+    if (answer === currentQ.correctAnswer) {
+        score++;
+        localStorage.setItem('score', score);
+        correctsound.play();
+        resultDiv.textContent = `✅گزینه درست بود`;
+    } else {
+        wrongsound.play();
+        resultDiv.textContent = `❌گزینه اشتباه بود`;
+    }
+
+    // پس از ۲ ثانیه به صورت خودکار سؤال بعدی نمایش داده شود
+    setTimeout(nextQuestion, 1500);
+}
+
+			 
+    function nextQuestion() {
+      currentQuestion++;
+	  const win = document.getElementById('win');
+      const end = document.getElementById('end');
+      if (currentQuestion < questions.length) {
+        const question = questions[currentQuestion];
+        document.getElementById('question-text').textContent = question.question;
+        const answerElements = document.querySelectorAll('.answer');
+        const answers = question.answers;
+        answerElements[0].textContent = answers.a;
+        answerElements[1].textContent = answers.b;
+        answerElements[2].textContent = answers.c;
+        answerElements[3].textContent = answers.d;
+        document.getElementById('result').textContent = '';
+      } else {
+		document.getElementById('result').textContent = `.تا کوییز بعدی خودت رو خوب آماده کن و امتیاز بیشتری بگیر،امتیاز نهایی شما: ${score}`;
+		  if (score >= 50) {
+			  win.play();
+			 alert (".مجوز ورود به فصل بعد رو گرفتی.برای دریافت پک فصل بعد،شماره فصل بعدی که میخوای رو به این آیدی توی ایتا بفرست:@ArtAnimate")
+		  } else {
+			  end.play();
+			  alert ("بازم تلاش کن تا جایزه رو ببری😉")
+		  } 
+        document.querySelector('button').disabled = true;
+      }
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const overlay = document.getElementById('overlay');
+
+      // باز و بسته کردن منو
+      menu.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+    document.getElementById('result').textContent = `امتیاز فعلی: ${score}`;
+	  
+    function openLoginForm() {
+      document.getElementById('loginForm').style.display = 'block';
+    }
+
+// چک کردن وضعیت ورود به حساب و نمایش بازی اگر کاربر وارد شده باشد
+if (localStorage.getItem('loggedIn') === 'true') {
+  document.getElementById('loginhelp').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';  // نمایش بازی
+  document.getElementById('login-message').style.display = 'none';  // مخفی کردن پیام ورود
+} else {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';  // پنهان کردن بازی
+  document.getElementById('login-message').style.display = 'block';  // نمایش پیام ورود
+}
+
+function login() {
+  const phone = document.getElementById("phone").value;
+  const password = document.getElementById("password").value;
+
+  if (phone === "09965655671" && password === "a13901390") {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('userInfo').style.display = 'block';
+    document.getElementById('quiz').style.display = 'block';  // نمایش بازی
+    document.getElementById('result').style.display = 'block';
+	const lastVisit = new Date().toLocaleString();
+    alert("با موفقیت وارد شدید");
+  }
+  if (phone === "09123456789" && password === "az123456") {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('userInfo2').style.display = 'block';
+    document.getElementById('quiz').style.display = 'block';  // نمایش بازی
+    const lastVisit = new Date().toLocaleString();
+    alert("با موفقیت وارد شدید");
+  } else {
+    alert("شماره تلفن یا رمز عبور اشتباه است!");
+  }
+}
+
+  </script>
+	
+	<h9>
+	
+	<script>
+	function cantact() {
+		alert("برای ارتباط با ما به آیدی زیر در ایتا پیام دهید\n@ArtAnimate19\nیــــــــا\nبه ایمیل زیر پیام دهید\nquiz19.ir@gmail.com\n\nآدرس کانال ما در ایتا\neitaa.com://artanimate9");
+	}
+	</script>
+
+	</h9>
+	<script>
+document.addEventListener("DOMContentLoaded", function () {
+        const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+        if (isLoggedIn) {
+            document.getElementById("loginMenuItem").style.display = "none"; // حذف گزینه ورود
+            document.getElementById("userProfile").style.display = "block";
+            document.getElementById("userName").textContent = "نام: " + localStorage.getItem("userName");
+            document.getElementById("userImage").src = localStorage.getItem("userImage");
+        }
+    });
+</script>
+	<script>
+    function logout() {
+		localStorage.clear();
+        alert("از حساب کاربری خارج شدید.");
+        window.location.reload();
+    }
+</script>
+	
+		<script>
+	function signin() {
+		alert("برای عضویت،کلمه عضویت را به ایمیل ما یا به آیدی ما در ایتا ارسال نمایید.");
+	}
+	</script>
+	
+	<script>
+	function foregt() {
+		alert("لطفا شماره موبایل ثبت‌شده در سایت را به آیدی ایتا یا ایمیل ما ارسال نمایید.");
+	}
+	</script>
+	
+	<script>
+	function about() {
+		alert("این سایت توسط امیرعلی کرمی طراحی شده است.این سایت به طور رسمی در 6 بهمن‌ماه 1403 آغاز به کار کرد.این سایت به جهت محک زدن دانش آموزان طراحی شده که در کنار محک خوردن،دانش آموزان جایزه هم می گیرند .");
+	}
+	</script>
+	</h7>
+
+</body>
+</html>
